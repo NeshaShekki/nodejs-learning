@@ -28,9 +28,7 @@ fs
   })
   .forEach(file => {
     const model = require(path.join(__dirname, file));
-    if (typeof model === 'function') {
-      db[model(sequelize, Sequelize.DataTypes).name] = model(sequelize, Sequelize.DataTypes);
-    }
+    db[model(sequelize, Sequelize.DataTypes).name] = model(sequelize, Sequelize.DataTypes);
   });
 
 Object.keys(db).forEach(modelName => {
@@ -41,5 +39,6 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
 
 module.exports = db;

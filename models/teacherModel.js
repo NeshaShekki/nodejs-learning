@@ -1,37 +1,47 @@
-const {sequelize} = require("./index");
-const { Sequelize, DataTypes } = require('sequelize');
-const User = require('./userModel');
+const { Model } = require('sequelize');
 
-const Teacher = sequelize.define('Teacher', {
-    id: {
+module.exports = (sequelize, DataTypes) => {
+  class Teacher extends Model {
+    static associate(models) {
+      // define association here
+    }
+  }
+  Teacher.init(
+    {
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
-    },
-    userId: {
+        autoIncrement: true,
+      },
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: User,
-            key: 'id'
-        }
-    },
-    firstName: {
+          model: 'Users', // assuming the table name is 'Users'
+          key: 'id',
+        },
+      },
+      firstName: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    lastName: {
+        allowNull: false,
+      },
+      lastName: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    createdAt: {
+        allowNull: false,
+      },
+      createdAt: {
         type: DataTypes.DATE,
-        allowNull: false
-    },
-    updatedAt: {
+        allowNull: false,
+      },
+      updatedAt: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Teacher',
     }
-});
-
-module.exports = Teacher;
+  );
+  return Teacher;
+};

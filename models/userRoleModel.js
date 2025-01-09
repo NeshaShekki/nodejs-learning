@@ -1,42 +1,47 @@
-const {sequelize} = require("./index");
-const { Sequelize, DataTypes } = require('sequelize');
-const Role = require('./roleModel');
-const User = require('./userModel');
+const { Model } = require('sequelize');
 
-const UserRole = sequelize.define('UserRole', {
-    id: {
+module.exports = (sequelize, DataTypes) => {
+  class UserRole extends Model {
+    static associate(models) {
+      // define association here
+    }
+  }
+  UserRole.init(
+    {
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
-    },
-    userId: {
+        autoIncrement: true,
+      },
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: User,
-            key: 'id'
-        }
-    },
-    roleId: {
+          model: 'Users', // assuming the table name is 'Users'
+          key: 'id',
+        },
+      },
+      roleId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Role,
-            key: 'id'
-        }
-    },
-    createdAt: {
+          model: 'Roles', // assuming the table name is 'Roles'
+          key: 'id',
+        },
+      },
+      createdAt: {
         type: DataTypes.DATE,
-        allowNull: false
-    },
-    updatedAt: {
+        allowNull: false,
+      },
+      updatedAt: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'UserRole',
     }
-});
-
-User.belongsToMany(Role, { through: UserRole });
-Role.belongsToMany(User, { through: UserRole });
-
-
-module.exports = UserRole;
+  );
+  return UserRole;
+};
