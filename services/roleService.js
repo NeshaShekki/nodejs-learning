@@ -1,6 +1,4 @@
-const Role = require('../models/roleModel');
-const User = require('../models/userModel');
-const UserRole = require('../models/userRoleModel');
+const { Role, User, UserRole } = require('../models');
 
 exports.getAllRoles = async () => {
     return await Role.findAll();
